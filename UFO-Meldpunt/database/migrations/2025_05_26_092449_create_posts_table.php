@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('timestamp');
             $table->string('location');
             $table->text('content');
-            $table->unsignedBigInteger('poster_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->string('image')->nullable();
             $table->boolean('is_hidden')->default(false);
         });
