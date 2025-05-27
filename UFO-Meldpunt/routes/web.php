@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Livewire\CreatePost;
+
+Route::get('/create-post', CreatePost::class);
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
