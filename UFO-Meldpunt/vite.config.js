@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-=======
 import { defineConfig } from 'vite'
 import laravel, { refreshPaths } from 'laravel-vite-plugin'
->>>>>>> Stashed changes
 
 export default defineConfig({
     plugins: [

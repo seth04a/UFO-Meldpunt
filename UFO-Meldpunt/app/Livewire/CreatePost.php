@@ -7,15 +7,20 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Livewire\WithFileUploads;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Filament\Forms\Get;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use App\Models\Category;
 
 class CreatePost extends Component implements HasForms
 {
     use InteractsWithForms;
+    use WithFileUploads;
 
     public ?array $data = [];
 
@@ -32,13 +37,22 @@ class CreatePost extends Component implements HasForms
                     ->required()
                     ->maxLength(255),
 
-                TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
+                DateTimePicker::make('Datum en tijd')
+                    ->required(),
 
                 RichEditor::make('content')
                     ->columnSpan(2)
                     ->maxLength(65535),
+                FileUpload::make('image')
+                    ->image()
+                    ->multiple()
+                    ->acceptedFileTypes(['image/png', 'image/jpeg']),
+                Select::make('Categorie')
+                    ->label('Categorie')
+                    ->options(
+                        Category::orderBy('category')->pluck('category', 'id')
+                    )
+                    ->required(),
 
 Select::make('Provincie')
     ->label('Provincie')
@@ -55,7 +69,9 @@ Select::make('Provincie')
         'Henegouwen' => 'Henegouwen',
         'Brussels' => 'Brussels',
     ])
-    ->live(),
+    ->live()
+    ->reactive()
+    ->afterStateUpdated(fn (callable $set) => $set('Gemeente', null)),
 
 Select::make('Gemeente')
     ->label('Gemeente')
@@ -362,22 +378,5 @@ Select::make('Gemeente')
     public function render(): View
     {
         return view('livewire.create-post');
-    }
-
-    private function getMunicipalitiesByProvince(): array
-    {
-        return [
-            'Antwerpen' => ['Antwerpen', 'Boom', 'Mechelen'],
-            'Limburg' => ['Hasselt', 'Genk', 'Tongeren'],
-            'Oost-Vlaanderen' => ['Gent', 'Aalst', 'Sint-Niklaas'],
-            'West-Vlaanderen' => ['Brugge', 'Kortrijk', 'Oostende'],
-            'Vlaams-Brabant' => ['Leuven', 'Vilvoorde', 'Tienen'],
-            'Waals-Brabant' => ['Wavre', 'Nivelles'],
-            'Luik' => ['Liège', 'Verviers', 'Huy'],
-            'Luxemburg' => ['Arlon', 'Bastogne', 'Marche-en-Famenne'],
-            'Namen' => ['Namur', 'Dinant', 'Ciney'],
-            'Henegouwen' => ['Mons', 'Charleroi', 'Tournai'],
-            'Brussels' => ['Brussel', 'Etterbeek', 'Schaerbeek'],
-        ];
     }
 }
