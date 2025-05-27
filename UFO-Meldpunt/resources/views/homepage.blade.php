@@ -49,7 +49,9 @@
     </main>
     </div>
     <div id="latest_sightings" class="md:w-1/8">
-        <div><p>sightings</p></div>
+        <div><p>sightings</p>
+    
+    </div>
     </div>
 </div>
 </body>
