@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Livewire\WithFileUploads;
@@ -16,6 +15,10 @@ use Filament\Forms\Get;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use App\Models\Category;
+use Filament\Forms\Components\Textarea;
+
+use App\Models\Posts;
+use Illuminate\Support\Facades\Auth;
 
 class CreatePost extends Component implements HasForms
 {
@@ -31,23 +34,21 @@ class CreatePost extends Component implements HasForms
 
     public function form(Form $form): Form
     {
+        
         return $form
             ->schema([
                 TextInput::make('title')
                     ->required()
                     ->maxLength(255),
 
-                DateTimePicker::make('Datum en tijd')
+                DateTimePicker::make('timestamp')
+                ->label('Datum en tijd')
                     ->required(),
-
-                RichEditor::make('content')
+                Textarea::make('content')
                     ->columnSpan(2)
                     ->maxLength(65535),
-                FileUpload::make('image')
-                    ->image()
-                    ->multiple()
-                    ->acceptedFileTypes(['image/png', 'image/jpeg']),
-                Select::make('Categorie')
+                FileUpload::make('image'),
+                Select::make('categorie_id')
                     ->label('Categorie')
                     ->options(
                         Category::orderBy('category')->pluck('category', 'id')
@@ -69,7 +70,6 @@ Select::make('Provincie')
         'Henegouwen' => 'Henegouwen',
         'Brussels' => 'Brussels',
     ])
-    ->live()
     ->reactive()
     ->afterStateUpdated(fn (callable $set) => $set('Gemeente', null)),
 
@@ -371,8 +371,28 @@ Select::make('Gemeente')
 
     public function create(): void
     {
-        // For testing: dump the form data on submit
-        dd($this->form->getState());
+                // Validate the form data (Filament should already validate)
+    $data = $this->form->getState();
+
+    // If you want to combine Provincie + Gemeente into location (optional)
+    $data['location'] = $data['Gemeente'];
+
+    // Add user_id if you want to associate the post with the logged-in user
+    $data['user_id'] = Auth::id();
+
+    // Handle images (FileUpload with multiple returns an array of file paths)
+    // You may want to store the images differently, but for example:
+    if (!empty($data['image']) && is_array($data['image'])) {
+        // Here we just serialize the array or json encode it for DB storage, or handle separately
+        $data['image'] = json_encode($data['image']);
+    }
+    $data['user_id'] = 0;
+
+    // Save the post
+    Posts::create($data);
+
+    // Optionally redirect or reset form
+    session()->flash('success', 'Post created successfully!');
     }
 
     public function render(): View
