@@ -19,7 +19,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $userPosts = \App\Models\Posts::where('user_id', auth()->id())->latest()->get();
+    return view('dashboard', compact('userPosts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -46,17 +47,6 @@ Route::get('/test-email', function () {
     });
     return 'Emails sent! succesfully';
 });
-
-
-
-Route::get('/testmail', function () {
-Mail::raw('A new user has registered!', function ($message) {
-    $message->to('admin@example.com')
-            ->subject('New User Registration');
-});
-});
-
-
 
 Route::get('/home',function (){
     return view('homepage');

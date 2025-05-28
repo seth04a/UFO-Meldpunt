@@ -17,6 +17,7 @@ use Filament\Forms\Components\FileUpload;
 use App\Models\Category;
 use Filament\Forms\Components\Textarea;
 
+use Illuminate\Support\Facades\Mail;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Auth;
 
@@ -391,7 +392,18 @@ Select::make('Gemeente')
     $data['category_id'] = (int)$data['category_id'];
 
     // Save the post
-    Posts::create($data);
+    $post = Posts::create($data);
+    $postId = $post->id;
+    $user = Auth::user();
+
+    // this is the mail the user will recieve once it makes a new post
+    Mail::to('admin@example.com')->send(new \App\Mail\NewSightingMail($user));
+
+    // sends a message to the admin at the same time about the same post
+    Mail::raw("User {$user->name} ({$user->email}) has sent a new picture to evaluate.\nPost ID: {$postId}" ,function($message)use ($user, $postId) {
+        $message->to('admin@example.com')
+                ->subject('New image posted');
+    });
 
     // Optionally redirect or reset form
     session()->flash('success', 'Post created successfully!');
