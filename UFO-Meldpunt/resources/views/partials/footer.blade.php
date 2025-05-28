@@ -1,4 +1,4 @@
-<footer class="bg-gray-100 text-sm p-6 shadow position:absolute bottom-0 w-full flex justify-center z-10">
+<footer class="bg-gray-100 text-sm p-6 shadow position:absolute bottom-0 w-full flex justify-center z-10 mt-10">
   <div class="w-full flex flex-row justify-between items-center gap-6 px-5">
     
     <!-- Left: Made By -->
