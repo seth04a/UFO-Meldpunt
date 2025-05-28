@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire;
+use Illuminate\Support\Arr;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -371,10 +372,7 @@ Select::make('Gemeente')
 
     public function create(): void
     {
-                // Validate the form data (Filament should already validate)
     $data = $this->form->getState();
-
-    // If you want to combine Provincie + Gemeente into location (optional)
     $data['location'] = $data['Gemeente'];
 
     // Add user_id if you want to associate the post with the logged-in user
@@ -389,6 +387,8 @@ Select::make('Gemeente')
     $user_id = Auth::id();
     $data['user_id'] = $user_id;
     $data['category_id'] = (int)$data['category_id'];
+
+    $data = Arr::except($data, ['Provincie', 'Gemeente']);
 
     // Save the post
     Posts::create($data);
