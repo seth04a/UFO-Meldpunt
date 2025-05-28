@@ -5,9 +5,11 @@
     <title>UFO Spotten</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="bg-black text-white font-sans">
+    @include('layouts.navigation')
     
     <header class="text-center py-10 bg-gray-900 shadow-md">
         <h1 class="text-5xl font-bold text-lime-400">UFO Spotten</h1>
@@ -67,5 +69,6 @@
         </div>
     </div>
 </div>
+ @include('partials.footer')
 </body>
 </html>

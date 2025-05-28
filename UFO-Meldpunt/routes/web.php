@@ -17,8 +17,8 @@ Route::get('/create-post', CreatePost::class)
 
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('homepage');
+})->name('homepage');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
