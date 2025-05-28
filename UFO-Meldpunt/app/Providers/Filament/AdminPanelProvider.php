@@ -53,6 +53,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            
+            ])
+            ->resources([
+            \App\Filament\Resources\UserResource::class,
+            \App\Filament\Resources\PostResource::class,
+            \App\Filament\Resources\CategoryResource::class,
+        ]);
     }
 }

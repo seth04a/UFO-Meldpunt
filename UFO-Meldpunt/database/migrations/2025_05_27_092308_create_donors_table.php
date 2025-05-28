@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('category');
-            $table->timestamps();
-        });
+        Schema::create('donors', function (Blueprint $table) {
+    $table->id();
+    $table->string('email')->nullable();
+    $table->string('stripe_id')->nullable(); // Required by Cashier
+    $table->string('pm_type')->nullable();
+    $table->string('pm_last_four', 4)->nullable();
+    $table->timestamps();
+});
     }
 
     /**
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('donors');
     }
 };
