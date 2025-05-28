@@ -2,7 +2,18 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 use App\Models\User;
+
+
+use App\Livewire\CreatePost;
+
+
+Route::get('/create-post', CreatePost::class)
+    ->middleware(['auth', 'verified'])
+    ->name('livewire.create-post');
+
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
