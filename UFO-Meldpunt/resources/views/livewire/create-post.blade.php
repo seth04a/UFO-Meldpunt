@@ -1,5 +1,6 @@
 
 <div>
+    @include('layouts.navigation')
     <form wire:submit="create">
         <x-form-layout>
         {{ $this->form }}
