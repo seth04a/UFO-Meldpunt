@@ -5,7 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Livewire\CreatePost;
 
-Route::get('/create-post', CreatePost::class);
+
+Route::get('/create-post', CreatePost::class)
+    ->middleware(['auth', 'verified'])
+    ->name('livewire.create-post');
+
 
 Route::get('/', function () {
     return view('welcome');

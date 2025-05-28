@@ -48,7 +48,7 @@ class CreatePost extends Component implements HasForms
                     ->columnSpan(2)
                     ->maxLength(65535),
                 FileUpload::make('image'),
-                Select::make('categorie_id')
+                Select::make('category_id')
                     ->label('Categorie')
                     ->options(
                         Category::orderBy('category')->pluck('category', 'id')
@@ -386,7 +386,9 @@ Select::make('Gemeente')
         // Here we just serialize the array or json encode it for DB storage, or handle separately
         $data['image'] = json_encode($data['image']);
     }
-    $data['user_id'] = 0;
+    $user_id = Auth::id();
+    $data['user_id'] = $user_id;
+    $data['category_id'] = (int)$data['category_id'];
 
     // Save the post
     Posts::create($data);
