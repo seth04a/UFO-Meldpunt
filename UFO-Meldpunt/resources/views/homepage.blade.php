@@ -50,20 +50,20 @@
     </div>
     <div id="latest_sightings" class="md:w-1/4 md:ml-4 py-8">
         <div class="bg-gray-800 p-4 rounded-2xl shadow-lg h-full overflow-y-auto max-h-[700px]">
-            <h2 class="text-xl font-bold text-lime-300 mb-4">Laatste Sightings</h2>
-            @if(isset($sightings) && $sightings->count())
-                @foreach($sightings as $sighting)
-                    <div class="mb-6 border-b border-gray-700 pb-4">
-                        <img src="{{ asset('storage/' . $sighting->image_path) }}" alt="Sighting Image" class="w-full h-32 object-cover rounded mb-2">
-                        <div class="text-gray-200 text-sm">
-                            <span class="block"><strong>Datum:</strong> {{ \Carbon\Carbon::parse($sighting->date)->format('d-m-Y') }}</span>
-                            <span class="block"><strong>Locatie:</strong> {{ $sighting->location }}</span>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <p class="text-gray-400">Nog geen sightings gevonden.</p>
-            @endif
+            <h2 class="text-xl font-bold text-lime-300 mb-4">Laatste nieuwe posts</h2>
+            @if(isset($posts) && $posts->count())
+    @foreach($posts as $post)
+        <div class="mb-6 border-b border-gray-700 pb-4">
+            <img src="{{ asset('storage/' . $post->image) }}" alt="Sighting Image" class="w-full h-32 object-cover rounded mb-2">
+            <div class="text-gray-200 text-sm">
+                <span class="block"><strong>Datum:</strong> {{ \Carbon\Carbon::parse($post->created_at)->format('d-m-Y') }}</span>
+                <span class="block"><strong>Locatie:</strong> {{ $post->location }}</span>
+            </div>
+        </div>
+    @endforeach
+@else
+    <p class="text-gray-400">Nog geen sightings gevonden.</p>
+@endif
         </div>
     </div>
 </div>
