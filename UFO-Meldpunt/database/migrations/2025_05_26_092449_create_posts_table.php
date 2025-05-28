@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('image')->nullable();
             $table->boolean('is_hidden')->default(false);
-            $table->string('updated_at');
-            $table->string('created_at');
+            $table->timestamp('updated_at');
+            $table->timestamp('created_at');
         });
     }
 
