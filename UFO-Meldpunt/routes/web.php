@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\User;
 
-
+use App\Models\Posts;
 use App\Livewire\CreatePost;
 
 
@@ -49,7 +49,8 @@ Route::get('/test-email', function () {
 });
 
 Route::get('/home',function (){
-    return view('homepage');
+    $posts = Posts::orderBy('created_at', 'desc')->take(10)->get();
+    return view('homepage', compact('posts'));
 });
 
 Route::post('/upload-images', [UploadController::class, 'store'])->name('upload.images');
