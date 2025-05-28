@@ -39,7 +39,7 @@ class DonationController extends Controller
             ],
         ], [
             'mode' => 'payment',
-            'success_url' => route('donate.thanks'),
+            'success_url' => route('thanks'),
             'cancel_url' => route('donate.form'),
         ]);
 
@@ -48,6 +48,6 @@ class DonationController extends Controller
 
     public function thankYou()
     {
-        return view('donate.thanks');
+        return view('thanks');
     }
 }

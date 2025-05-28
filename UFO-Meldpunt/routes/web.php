@@ -23,6 +23,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/donate', [DonationController::class, 'showForm'])->name('donate.form');
 Route::post('/donate', [DonationController::class, 'processDonation'])->name('donate.process');
-Route::get('/donate/thanks', [DonationController::class, 'thankYou'])->name('donate.thanks');
+Route::get('/thanks', [DonationController::class, 'thankYou'])->name('thanks');
 
 require __DIR__.'/auth.php';
