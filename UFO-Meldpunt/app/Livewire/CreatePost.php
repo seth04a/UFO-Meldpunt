@@ -49,7 +49,10 @@ class CreatePost extends Component implements HasForms
                 Textarea::make('content')
                     ->columnSpan(2)
                     ->maxLength(65535),
-                FileUpload::make('image'),
+                FileUpload::make('image')
+                    ->label('Post Image')
+                    ->image()
+                    ->directory('posts/images'),
                 Select::make('category_id')
                     ->label('Categorie')
                     ->options(
