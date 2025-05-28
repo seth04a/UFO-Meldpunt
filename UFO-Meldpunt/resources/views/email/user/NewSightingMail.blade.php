@@ -9,7 +9,7 @@
 <body style="font-family: Arial, sans-serif; background-color: #0d0d0d; color: #ffffff; padding: 30px;">
 
     <div style="max-width: 600px; margin: auto; background-color: #1a1a1a; padding: 20px; border-radius: 8px;">
-        <h2 style="color: #00ffcc;">Welcome to UFO spotter</h2>
+        <h2 style="text-lime-400;">Welcome to UFO spotter</h2>
 
         <p>Hallo {{ $user->name ?? 'spotter' }},</p>
 
