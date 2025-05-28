@@ -5,7 +5,7 @@
 cd ~/subsites/spotmyalien.be/YouGotProbed
 
 # Basic deployment confirmation
-echo "Files deployed successfully to subsites/spotmyalien.be/YouGotProbeds"
+echo "Files deployed successfully to subsites/spotmyalien.be/YouGotProbed"
 
 # Check if .env file exists, if not notify to create one
 if [ ! -f .env ]; then
